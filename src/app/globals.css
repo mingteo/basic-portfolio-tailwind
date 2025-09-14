@@ -1,41 +1,45 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #2c5f2d;
-    --color-dark: oklch(20.8% 0.042 265.755);
-    --color-background: #ffff;
-    --color-secondary: #64748b;
+  --color-primary: #03fc88;
+  --color-dark: oklch(20.8% 0.042 265.755);
+  --color-background: #ffff;
+  --color-secondary: #64748b;
 }
 
 @layer base {
-    body {
-        @apply bg-background;
-        font-family: 'Inter', sans-serif;
-    }
+  body {
+    @apply bg-background;
+    font-family: "Inter", sans-serif;
+  }
 }
 
 .navbar-fixed {
-    @apply bg-white/70 fixed top-0 left-0 w-full flex items-center z-[9999] backdrop-blur-sm border-b border-black/10;
+  @apply dark:bg-dark fixed top-0 left-0 z-[9999] flex w-full items-center border-b border-black/10 bg-white/70 backdrop-blur-sm dark:opacity-50;
 }
 
-.navbar-none {
-    @apply bg-transparent absolute top-0 left-0 w-full flex items-center z-10;
+.navbar-transparent {
+  @apply absolute top-0 left-0 z-10 flex w-full items-center bg-transparent;
 }
 
 .hamburger-line {
-    @apply w-[30px] h-[2px] my-2 block bg-dark;
+  @apply bg-dark my-2 block h-[2px] w-[30px] dark:bg-white;
 }
 
 .hamburger-active .line-1 {
-    @apply rotate-45;
+  @apply rotate-45;
 }
 
 .hamburger-active .line-2 {
-    @apply scale-0;
+  @apply scale-0;
 }
 
 .hamburger-active .line-3 {
-    @apply -rotate-45;
+  @apply -rotate-45;
 }
 
-/* #ffe77a; */
+#dark-toggle:checked ~ label div.toggle-circle {
+  @apply translate-x-3;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
