@@ -5,7 +5,12 @@ import React, { useEffect, useRef, useState } from "react";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "light";
+    }
+    return "light";
+  });
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const navMenuRef = useRef<HTMLElement>(null);
@@ -43,25 +48,17 @@ const Navbar = () => {
 
   // cek localStorage pas awal
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      setTheme(savedTheme);
-      if (savedTheme === "dark") {
-        document.documentElement.classList.add("dark");
-      }
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
+    if (theme === "dark") {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
     } else {
-      setTheme("light");
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
     }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (
